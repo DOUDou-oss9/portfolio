@@ -15,7 +15,6 @@
     if (finished) return;
     finished = true;
     clearTimeout(fallback);
-    window.removeEventListener('load', finish);
     try { sessionStorage.setItem('portfolio-opened', '1'); } catch {}
     const main = document.querySelector('main');
     if (main) main.inert = false;
@@ -31,8 +30,6 @@
     const main = document.querySelector('main');
     if (main && !finished) main.inert = true;
   }, {once:true});
-  // Real page readiness, without a simulated percentage or a minimum wait.
-  fallback = setTimeout(finish, 6000);
-  if (document.readyState === 'complete') finish();
-  else window.addEventListener('load', finish, {once:true});
+  // Show the introduction for three seconds; the skip button remains available.
+  fallback = setTimeout(finish, 3000);
 })();

@@ -20,3 +20,9 @@ document.querySelector('.close-folder')?.addEventListener('click',()=>{
  closeFolder();
  active?.focus();
 });
+
+document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener('click',async()=>{
+ const status=document.querySelector('#contact-status');
+ try{await navigator.clipboard.writeText(button.dataset.copy);status.textContent=button.dataset.label+'已复制。';}
+ catch{status.textContent='请手动复制'+button.dataset.label+'：'+button.dataset.copy;}
+}));

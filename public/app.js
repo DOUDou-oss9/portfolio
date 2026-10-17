@@ -26,3 +26,19 @@ document.querySelectorAll('[data-copy]').forEach(button=>button.addEventListener
  try{await navigator.clipboard.writeText(button.dataset.copy);status.textContent=button.dataset.label+'已复制。';}
  catch{status.textContent='请手动复制'+button.dataset.label+'：'+button.dataset.copy;}
 }));
+
+document.querySelector('#contact-form')?.addEventListener('submit',event=>{
+ event.preventDefault();
+ const form=event.currentTarget;
+ if(!form.reportValidity())return;
+ const fields=new FormData(form);
+ const name=String(fields.get('name')||'').trim();
+ const email=String(fields.get('email')||'').trim();
+ const message=String(fields.get('message')||'').trim();
+ const status=document.querySelector('#message-status');
+ if(!name||!message){status.textContent='请填写称呼和留言内容。';return;}
+ const subject=encodeURIComponent('来自作品集网站的联系：'+name);
+ const body=encodeURIComponent('称呼：'+name+'\n联系邮箱：'+email+'\n\n'+message);
+ status.textContent='请在邮件应用中确认发送。如未打开，请使用左侧邮箱直接联系。';
+ window.location.href='mailto:1139637692@qq.com?subject='+subject+'&body='+body;
+});
